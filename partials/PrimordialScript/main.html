@@ -1,0 +1,37 @@
+﻿<div>
+    <table>
+        <tr>
+            <td>Organism Count</td>
+            <td>{{viewModel.environment.organisms.length}}</td>
+        </tr>
+        <tr>
+            <td>Energy</td>
+            <td>{{viewModel.organism.energy|number}}</td>
+        </tr>
+        <tr>
+            <td>Size</td>
+            <td>{{viewModel.organism.size|number}}</td>
+        </tr>
+        <tr>
+            <td>Location</td>
+            <td>{{viewModel.organism.location}}</td>
+        </tr>
+        <tr>
+            <td>Velocity</td>
+            <td>{{viewModel.organism.velocity}}</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>{{viewModel.organism.age|number}}</td>
+        </tr>
+        <tr>
+            <td>Aggression</td>
+            <td>{{viewModel.organism.aggression|number}}</td>
+        </tr>
+        <tr>
+            <td>Genome Length</td>
+            <td>{{viewModel.organism.genome.getSize()|number}}</td>
+        </tr>
+    </table>
+    <environment environment="viewModel.environment"></environment>
+</div>
