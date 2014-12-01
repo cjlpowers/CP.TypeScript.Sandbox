@@ -1,3 +1,21 @@
 ﻿<div>
-    <canvas style="border:1px solid black" width="800" height="500"></canvas> 
+    <canvas style="border:1px solid black" width="1000" height="500"></canvas> 
+    <table class="table table-striped">
+        <tr>
+            <th>Number</th>
+            <th>Position</th>
+            <th>Force</th>
+            <th>Displacement</th>
+            <th>Reaction Force</th>
+            <th>Reaction Displacement</th>
+        </tr>
+        <tr ng-repeat="node in structure.nodes">
+            <td>{{node.number}}</td>
+            <td>{{node.position.toString()}}</td>
+            <td>{{node.force.toString()}}</td>
+            <td>{{node.displacement.toString()}}</td>
+            <td>{{node.reactionForce.toString()}}</td>
+            <td>{{node.reactionDisplacement.toString()}}</td>
+        </tr>
+    </table>
 </div>

@@ -19,9 +19,11 @@ module Sandbox.Truss {
                         //canvas.attr("height", environment.size.y);
                         var ctx: CanvasRenderingContext2D = (<any>canvas[0]).getContext("2d");
 
+                        var scale = 7;
+                        var border = 0.3;
+                        
                         // setup the view port
-                        ctx.scale(5, 5);
-                        ctx.translate(10, 10);
+                        ctx.transform(scale * (1 - border), 0, 0, -scale * (1 - border), (border/2) * canvas.width(), (1 - border/2) * canvas.height());
 
                         function render() {
                             structure.render(ctx);
