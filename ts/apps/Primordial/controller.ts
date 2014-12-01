@@ -16,11 +16,14 @@ module Sandbox.Apps.Primordial {
 
             var size = new CP.Mathematics.Vector2(300, 300);
             CP.Genetics.PrimitiveEnvironment.MinOrganismPopulation = 100;
+            
             var environment = new CP.Genetics.PrimitiveEnvironment(size);
             for (var i = 0; i < 100; i++)
                 environment.spawnOrganism();
+
             $scope.viewModel.organism = environment.organisms[0];
             $scope.viewModel.environment = environment;
+            
             $scope.viewModel.environment.onExecute = function () {
                 $scope.viewModel.organism = environment.organisms[0];
             }
