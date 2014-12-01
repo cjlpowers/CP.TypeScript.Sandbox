@@ -1,13 +1,13 @@
-﻿/// <reference path="../includes.ts" />
+﻿/// <reference path="../../Includes.ts" />
 
-module Sandbox.PrimordialScript {
+module Sandbox.Apps.Primordial {
     export class environmentDirective extends directive {
         
         static injection(): any[] {return [() => { return new this() }] }
 
         constructor() {
             super();
-            this.templateUrl = 'Partials/PrimordialScript/environment.html';
+            this.templateUrl = 'ts/apps/Primordial/environment.html';
             this.scope = {
                 environment: "="
             };

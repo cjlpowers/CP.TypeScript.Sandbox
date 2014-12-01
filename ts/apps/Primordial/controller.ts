@@ -1,6 +1,6 @@
-﻿/// <reference path='../Includes.ts' />
+﻿/// <reference path='../../Includes.ts' />
 
-module Sandbox.PrimordialScript {
+module Sandbox.Apps.Primordial {
     export interface IControllerScope extends ng.IScope {
         viewModel: controller;
     }

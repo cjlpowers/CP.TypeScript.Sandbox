@@ -1,13 +1,13 @@
-﻿/// <reference path="../includes.ts" />
+﻿/// <reference path="../../includes.ts" />
 
-module Sandbox.Truss {
+module Sandbox.Apps.Truss {
     export class structureDirective extends directive {
         
         static injection(): any[] {return [() => { return new this() }] }
 
         constructor() {
             super();
-            this.templateUrl = 'Partials/Truss/structure.html';
+            this.templateUrl = 'ts/apps/Truss/structure.html';
             this.scope = {
                 structure: "="
             };
@@ -23,7 +23,7 @@ module Sandbox.Truss {
                         var border = 0.3;
                         
                         // setup the view port
-                        ctx.transform(scale * (1 - border), 0, 0, -scale * (1 - border), (border/2) * canvas.width(), (1 - border/2) * canvas.height());
+                        ctx.transform(scale * (1 - border), 0, 0, scale * (1 - border), (border/2) * canvas.width(), (border/2) * canvas.height());
 
                         function render() {
                             structure.render(ctx);

@@ -1,6 +1,6 @@
-﻿/// <reference path='../Includes.ts' />
+﻿/// <reference path='../../Includes.ts' />
 
-module Sandbox.Truss {
+module Sandbox.Apps.Truss {
     export interface IControllerScope extends ng.IScope {
         viewModel: controller;
     }
@@ -56,28 +56,28 @@ module Sandbox.Truss {
             var nodes = new Array<CP.Mechanical.Node>();
             nodes.push(new CP.Mechanical.Node(1));
             nodes[0].position.x = 0;
-            nodes[0].position.y = 0;
+            nodes[0].position.y = 30;
             nodes[0].displacement.x = 0;
             nodes[0].displacement.y = 0;
 
             nodes.push(new CP.Mechanical.Node(2));
             nodes[1].position.x = 40;
-            nodes[1].position.y = 0;
+            nodes[1].position.y = 30;
 
             nodes.push(new CP.Mechanical.Node(3));
             nodes[2].position.x = 40;
-            nodes[2].position.y = 30;
+            nodes[2].position.y = 0;
             nodes[2].force.y = -10000;
 
             nodes.push(new CP.Mechanical.Node(4));
             nodes[3].position.x = 0;
-            nodes[3].position.y = 30;
+            nodes[3].position.y = 0;
             nodes[3].displacement.x = 0;
             nodes[3].displacement.y = 0;
 
             nodes.push(new CP.Mechanical.Node(5));
             nodes[4].position.x = 80;
-            nodes[4].position.y = 0;
+            nodes[4].position.y = 30;
             nodes[4].force.y = -25000;
 
             var material = new CP.Mechanical.Material("Material 1", new CP.Mathematics.Value(29.5 * Math.pow(10, 6), "x10^6 psi"));

@@ -1,8 +1,8 @@
 ﻿/// <reference path="Includes.ts"/>
 
 angular.module('app', [])
-    .directive('environment', Sandbox.PrimordialScript.environmentDirective.injection())
-    .directive('structure', Sandbox.Truss.structureDirective.injection())
+    .directive('environment', Sandbox.Apps.Primordial.environmentDirective.injection())
+    .directive('structure', Sandbox.Apps.Truss.structureDirective.injection())
     .config(['$routeProvider', function ($routeProvider: ng.route.IRouteProvider) {
         $routeProvider
             .when('/',
@@ -12,13 +12,13 @@ angular.module('app', [])
             })
             .when('/Primordial',
             {
-                controller: Sandbox.PrimordialScript.controller,
-                templateUrl: 'Partials/PrimordialScript/main.html'
+                controller: Sandbox.Apps.Primordial.controller,
+                templateUrl: 'ts/apps/Primordial/main.html'
             })
             .when('/Truss',
             {
-                controller: Sandbox.Truss.controller,
-                templateUrl: 'Partials/Truss/main.html'
+                controller: Sandbox.Apps.Truss.controller,
+                templateUrl: 'ts/apps/Truss/main.html'
             })
             .otherwise({ redirectTo: '/' });
     }]);
