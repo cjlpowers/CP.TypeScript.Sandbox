@@ -23,5 +23,9 @@ module Sandbox.Apps.Primordial {
                 $scope.viewModel.organism = environment.organisms[0];
             }
         }
+
+        public annihilate() {
+            this.environment.organisms.map((o) => o).forEach((o) => this.environment.removeOrganism(o));
+        }
     }
 }

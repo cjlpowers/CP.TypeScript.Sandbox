@@ -257,6 +257,10 @@ var Sandbox;
                         $scope.viewModel.organism = environment.organisms[0];
                     };
                 }
+                Controller.prototype.annihilate = function () {
+                    var _this = this;
+                    this.environment.organisms.map(function (o) { return o; }).forEach(function (o) { return _this.environment.removeOrganism(o); });
+                };
                 Controller.$inject = ['$scope'];
                 return Controller;
             })(Sandbox.Angular.Controller);
