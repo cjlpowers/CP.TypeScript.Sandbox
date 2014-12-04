@@ -1,7 +1,7 @@
-﻿/// <reference path="../../includes.ts" />
+﻿/// <reference path='../../Includes.ts' />
 
 module Sandbox.Apps.Truss {
-    export class structureDirective extends directive {
+    export class StructureDirective extends Angular.Directive {
         
         static injection(): any[] {return [() => { return new this() }] }
 
@@ -12,26 +12,22 @@ module Sandbox.Apps.Truss {
                 structure: "="
             };
             this.link = (scope, element, attr) => {
+
+                var scale = 7;
+                var border = 0.3;
+                var canvas = element.children("canvas");
+                var ctx: CanvasRenderingContext2D = (<any>canvas[0]).getContext("2d");
+                ctx.scale(scale,scale);
+                ctx.translate(15, 15);
+
+                function showStructure(structure: CP.Mechanical.Structure<CP.Mechanical.Element>) {
+                    ctx.clearRect(-15,-15,ctx.canvas.width, ctx.canvas.height);
+                    if(structure)
+                        structure.render(ctx);
+                }
+
                 scope.$watch('structure', (structure: CP.Mechanical.Structure<CP.Mechanical.Element>) => {
-                    if (angular.isObject(structure)) {
-                        var canvas = element.children("canvas");
-                        //canvas.attr("width", environment.size.x);
-                        //canvas.attr("height", environment.size.y);
-                        var ctx: CanvasRenderingContext2D = (<any>canvas[0]).getContext("2d");
-
-                        var scale = 7;
-                        var border = 0.3;
-                        
-                        // setup the view port
-                        ctx.transform(scale * (1 - border), 0, 0, scale * (1 - border), (border/2) * canvas.width(), (border/2) * canvas.height());
-
-                        function render() {
-                            structure.render(ctx);
-                            window.requestAnimationFrame(render);
-                            scope.$apply();
-                        }
-                        render();
-                    }
+                    showStructure(structure);
                 });
             };
         }

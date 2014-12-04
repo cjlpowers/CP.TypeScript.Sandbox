@@ -1,30 +1,25 @@
 ﻿/// <reference path='../../Includes.ts' />
 
 module Sandbox.Apps.Primordial {
-    export interface IControllerScope extends ng.IScope {
-        viewModel: controller;
-    }
-
-    export class controller {
-        SomeProperty: string;
+    export class Controller extends Angular.Controller<Controller> {
         environment: CP.Genetics.PrimitiveEnvironment;
         organism: CP.Genetics.PrimitiveOrganism;
 
-        static $inject = ['$scope', '$rootScope', '$routeParams', '$q'];
-        constructor(private $scope: IControllerScope, private $rootScope: ng.IScope, private $routeParams: any, private $q: ng.IQService) {
-            $scope.viewModel = this;
+        static $inject = ['$scope'];
+        constructor(protected $scope: Angular.IScope<Controller>) {
+            super($scope);
 
-            var size = new CP.Mathematics.Vector2(300, 300);
+            var size = new CP.Mathematics.Vector2(600, 400);
             CP.Genetics.PrimitiveEnvironment.MinOrganismPopulation = 100;
             
             var environment = new CP.Genetics.PrimitiveEnvironment(size);
             for (var i = 0; i < 100; i++)
                 environment.spawnOrganism();
 
-            $scope.viewModel.organism = environment.organisms[0];
-            $scope.viewModel.environment = environment;
+            this.organism = environment.organisms[0];
+            this.environment = environment;
             
-            $scope.viewModel.environment.onExecute = function () {
+            this.environment.onExecute = function () {
                 $scope.viewModel.organism = environment.organisms[0];
             }
         }
