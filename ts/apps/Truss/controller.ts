@@ -13,11 +13,11 @@ module Sandbox.Apps.Truss {
                 if (value) {
                     var definition = JSON.parse(value);
                     this.loadStructure(definition);
-                    this.structureJson = JSON.stringify(definition, null, "\t");
+                    this.structureJson = JSON.stringify(definition, null, "  ");
                 }
             });
 
-            this.structureJson = JSON.stringify(this.getStructureDefinition(),null,"\t");
+            this.structureJson = JSON.stringify(this.getStructureDefinition(),null,"  ");
         }
 
         public loadStructure(structureDefinition: CP.Mechanical.StructureDefinition) {

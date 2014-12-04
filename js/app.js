@@ -106,10 +106,10 @@ var Sandbox;
                         if (value) {
                             var definition = JSON.parse(value);
                             _this.loadStructure(definition);
-                            _this.structureJson = JSON.stringify(definition, null, "\t");
+                            _this.structureJson = JSON.stringify(definition, null, "  ");
                         }
                     });
-                    this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "\t");
+                    this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "  ");
                 }
                 Controller.prototype.loadStructure = function (structureDefinition) {
                     var structure = CP.Mechanical.Structure.load(structureDefinition);
