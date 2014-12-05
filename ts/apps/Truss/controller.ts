@@ -21,7 +21,7 @@ module Sandbox.Apps.Truss {
         }
 
         public loadStructure(structureDefinition: CP.Mechanical.StructureDefinition) {
-            var structure = CP.Mechanical.Structure.load(structureDefinition);
+            var structure = CP.Mechanical.TrussStructure.load(structureDefinition);
             structure.solve();
             this.structure = structure;
         }
@@ -30,37 +30,41 @@ module Sandbox.Apps.Truss {
             return {
                 nodes: [
                     {
-                        position: {x: 0, y: 30},
-                        displacement: {x: 0, y: 0 }
-                    },
-                    {
-                        position: {x: 40, y: 30 },
-                        force: { y: -10000 }
-                    },
-                    {
-                        position: { x: 40, y: 0 }
+                        position: { x: 0, y: 40 },
+                        displacement: { x: 0, y: 0 }
                     },
                     {
                         position: { x: 0, y: 0 },
-                        displacement: { x: 0, y: 0}
+                        displacement: { x: 0, y: 0 }
                     },
                     {
-                        position: { x: 60, y: 15 }
+                        position: { x: 40, y: 40 },
+                        force: { y: 2000 }
                     },
                     {
-                        position: { x: 80, y: 30 },
-                        force: { y: -25000 }
+                        position: { x: 40, y: 0 },
+                    },
+                    {
+                        position: { x: 80, y: 40 },
+                        force: { x: 2000 }
+                    },
+                    {
+                        position: { x: 80, y: 0 },
+                        force: { x: 4000, y: -6000 }
                     },
                 ],
                 elements: [
-                    { area: 1, nodes: [0, 1] },
-                    { area: 1, nodes: [2, 1] },
-                    { area: 1, nodes: [0, 2] },
-                    { area: 1, nodes: [3, 2] },
-                    { area: 1, nodes: [1, 4] },
-                    { area: 1, nodes: [2, 4] },
-                    { area: 1, nodes: [4, 5] },
-                    { area: 1, nodes: [1, 5] }
+                    { area: 1.5, nodes: [0, 2] },
+                    { area: 1.5, nodes: [0, 3] },
+                    { area: 1.5, nodes: [1, 3] },
+                    { area: 1.5, nodes: [2, 3] },
+                    { area: 1.5, nodes: [2, 4] },
+                    { area: 1.5, nodes: [3, 4] },
+                    { area: 1.5, nodes: [3, 5] },
+                    { area: 1.5, nodes: [4, 5] },
+                ],
+                materials: [
+                    { name: "Steel", elasticModulus: 10 * Math.pow(10, 6) }
                 ]
             };
         }

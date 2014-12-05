@@ -20,4 +20,16 @@
             <td>{{node.reactionDisplacement.toString()}}</td>
         </tr>
     </table>
+    <table class="table table-striped">
+        <tr>
+            <th>Number</th>
+            <th>Length</th>
+            <th>Stress</th>
+        </tr>
+        <tr ng-repeat="element in structure.elements">
+            <td>{{element.number}}</td>
+            <td>{{element.length.toString()}}</td>
+            <td>{{element.stress.toString()}}</td>
+        </tr>
+    </table>
 </div>
