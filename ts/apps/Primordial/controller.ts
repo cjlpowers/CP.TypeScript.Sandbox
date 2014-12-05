@@ -20,7 +20,7 @@ module Sandbox.Apps.Primordial {
             this.environment = environment;
             
             this.environment.onExecute = function () {
-                $scope.viewModel.organism = environment.organisms[0];
+                this.organism = environment.organisms[0];
             }
         }
 

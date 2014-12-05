@@ -9,11 +9,11 @@ module Sandbox.Apps.Truss {
         constructor(protected $scope: Angular.IScope<Controller>) {
             super($scope);
 
-            $scope.$watch(() => { return this.structureJson; }, (value) => {
+            $scope.$watch(() => this.structureJson, (value) => {
                 if (value) {
                     var definition = JSON.parse(value);
                     this.loadStructure(definition);
-                    this.structureJson = JSON.stringify(definition, null, "  ");
+                    this.structureJson = value;
                 }
             });
 
@@ -50,7 +50,7 @@ module Sandbox.Apps.Truss {
                     {
                         position: { x: 80, y: 30 },
                         force: { y: -25000 }
-                    }
+                    },
                 ],
                 elements: [
                     { area: 1, nodes: [0, 1] },
@@ -64,6 +64,5 @@ module Sandbox.Apps.Truss {
                 ]
             };
         }
-
     }
 }

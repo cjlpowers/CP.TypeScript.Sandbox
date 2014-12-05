@@ -100,13 +100,11 @@ var Sandbox;
                     var _this = this;
                     _super.call(this, $scope);
                     this.$scope = $scope;
-                    $scope.$watch(function () {
-                        return _this.structureJson;
-                    }, function (value) {
+                    $scope.$watch(function () { return _this.structureJson; }, function (value) {
                         if (value) {
                             var definition = JSON.parse(value);
                             _this.loadStructure(definition);
-                            _this.structureJson = JSON.stringify(definition, null, "  ");
+                            _this.structureJson = value;
                         }
                     });
                     this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "  ");
@@ -140,7 +138,7 @@ var Sandbox;
                             {
                                 position: { x: 80, y: 30 },
                                 force: { y: -25000 }
-                            }
+                            },
                         ],
                         elements: [
                             { area: 1, nodes: [0, 1] },
@@ -254,7 +252,7 @@ var Sandbox;
                     this.organism = environment.organisms[0];
                     this.environment = environment;
                     this.environment.onExecute = function () {
-                        $scope.viewModel.organism = environment.organisms[0];
+                        this.organism = environment.organisms[0];
                     };
                 }
                 Controller.prototype.annihilate = function () {
