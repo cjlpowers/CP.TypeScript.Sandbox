@@ -1,18 +1,18 @@
 ﻿/// <reference path="../../Includes.ts" />
 
 module Sandbox.Apps.Primordial {
-    export class EnvironmentDirective extends Angular.Directive {
-              
-        static injection(): any[] { 
-            return ['$timeout', (timeout) => { return new this(timeout) }] 
-        }
 
+    interface IEnvironmentDirectiveScope extends ng.IScope {
+        environment: CP.Genetics.PrimitiveEnvironment;
+    }
+
+    export class EnvironmentDirective extends Angular.Directive<IEnvironmentDirectiveScope> {
+        static $inject = ['$timeout', (timeout) => { return new EnvironmentDirective(timeout) }];
         constructor($timeout: ng.ITimeoutService) {
-            super();
-            this.templateUrl = 'ts/apps/Primordial/environment.html';
-            this.scope = {
+            super({
                 environment: "="
-            };
+            });
+            this.templateUrl = 'ts/apps/Primordial/environment.html';
             this.link = (scope, element, attr) => {
                 var canvas = element.children("canvas");
                 var ctx: any = canvas[0];

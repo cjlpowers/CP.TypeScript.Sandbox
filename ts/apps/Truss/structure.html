@@ -1,8 +1,16 @@
 ﻿<div>
     <canvas style="border:1px solid black" width="1000" height="500"></canvas>
-    <br />
-    Show Elements: <input ng-model="structure.showElements" type="checkbox" /> 
-    Show Nodes: <input ng-model="structure.showNodes" type="checkbox" /> 
+    <div class="input-group">
+        Show Elements: <input ng-model="options.showElements" type="checkbox" />
+        Show Nodes: <input ng-model="options.showNodes" type="checkbox" />
+        Displacement: 
+        <div class="input-group">
+            <span class="input-group-addon">
+                <input ng-model="options.showDisplacement" type="checkbox">
+            </span>
+            <input ng-model="options.displacementMultiplier" type="number" class="form-control" />
+        </div>
+    </div>
     <table class="table table-striped">
         <tr>
             <th>Number</th>

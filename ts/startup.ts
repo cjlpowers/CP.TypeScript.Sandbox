@@ -1,8 +1,8 @@
 ﻿/// <reference path="Includes.ts"/>
 
 angular.module('app', [])
-    .directive('environment', Sandbox.Apps.Primordial.EnvironmentDirective.injection())
-    .directive('structure', Sandbox.Apps.Truss.StructureDirective.injection())
+    .directive('environment', Sandbox.Apps.Primordial.EnvironmentDirective.$inject)
+    .directive('structure', Sandbox.Apps.Truss.StructureDirective.$inject)
     .config(['$routeProvider', function ($routeProvider: ng.route.IRouteProvider) {
         $routeProvider
             .when('/',

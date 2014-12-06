@@ -13,16 +13,12 @@ module Sandbox.Angular {
         }
     }
 
-    export class Directive implements ng.IDirective {
+    export class Directive<TScope extends ng.IScope> implements ng.IDirective {
         restrict: any = 'E';
         replace = true;
         templateUrl: any;
-        link: ($scope: ng.IScope, element: JQuery, attributes: any) => any;
-        scope: any = undefined;
-
-        static injection(): any[] { return [() => { return new this() }] }
-
-        constructor() {
+        link: ($scope: TScope, element: JQuery, attributes: any) => any;
+        constructor(public scope: any) {
         }
     }
 }

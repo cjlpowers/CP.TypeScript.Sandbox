@@ -13,17 +13,11 @@ var Sandbox;
         })();
         Angular.Controller = Controller;
         var Directive = (function () {
-            function Directive() {
+            function Directive(scope) {
+                this.scope = scope;
                 this.restrict = 'E';
                 this.replace = true;
-                this.scope = undefined;
             }
-            Directive.injection = function () {
-                var _this = this;
-                return [function () {
-                    return new _this();
-                }];
-            };
             return Directive;
         })();
         Angular.Directive = Directive;
@@ -45,11 +39,10 @@ var Sandbox;
             var EnvironmentDirective = (function (_super) {
                 __extends(EnvironmentDirective, _super);
                 function EnvironmentDirective($timeout) {
-                    _super.call(this);
-                    this.templateUrl = 'ts/apps/Primordial/environment.html';
-                    this.scope = {
+                    _super.call(this, {
                         environment: "="
-                    };
+                    });
+                    this.templateUrl = 'ts/apps/Primordial/environment.html';
                     this.link = function (scope, element, attr) {
                         var canvas = element.children("canvas");
                         var ctx = canvas[0];
@@ -75,12 +68,9 @@ var Sandbox;
                         });
                     };
                 }
-                EnvironmentDirective.injection = function () {
-                    var _this = this;
-                    return ['$timeout', function (timeout) {
-                        return new _this(timeout);
-                    }];
-                };
+                EnvironmentDirective.$inject = ['$timeout', function (timeout) {
+                    return new EnvironmentDirective(timeout);
+                }];
                 return EnvironmentDirective;
             })(Sandbox.Angular.Directive);
             Primordial.EnvironmentDirective = EnvironmentDirective;
@@ -100,22 +90,76 @@ var Sandbox;
                     var _this = this;
                     _super.call(this, $scope);
                     this.$scope = $scope;
-                    $scope.$watch(function () { return _this.structureJson; }, function (value) {
-                        if (value) {
-                            var definition = JSON.parse(value);
-                            _this.loadStructure(definition);
-                            _this.structureJson = value;
-                        }
-                    });
-                    this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "  ");
-                }
-                Controller.prototype.loadStructure = function (structureDefinition) {
-                    var structure = CP.Mechanical.TrussStructure.load(structureDefinition);
-                    structure.solve();
-                    this.structure = structure;
-                };
-                Controller.prototype.getStructureDefinition = function () {
-                    return {
+                    this.bridgeStructure = {
+                        nodes: [
+                            {
+                                position: { x: 0, y: 40 },
+                                displacement: { x: 0, y: 0 }
+                            },
+                            {
+                                position: { x: 30, y: 40 },
+                            },
+                            {
+                                position: { x: 30, y: 0 },
+                            },
+                            {
+                                position: { x: 60, y: 40 },
+                            },
+                            {
+                                position: { x: 60, y: 0 },
+                            },
+                            {
+                                position: { x: 90, y: 40 },
+                                force: { y: 10000 }
+                            },
+                            {
+                                position: { x: 90, y: 0 },
+                            },
+                            {
+                                position: { x: 120, y: 40 },
+                            },
+                            {
+                                position: { x: 120, y: 0 },
+                            },
+                            {
+                                position: { x: 150, y: 40 },
+                            },
+                            {
+                                position: { x: 150, y: 0 },
+                            },
+                            {
+                                position: { x: 180, y: 40 },
+                                displacement: { y: 0 }
+                            },
+                        ],
+                        elements: [
+                            { area: 1.5, nodes: [0, 1] },
+                            { area: 1.5, nodes: [0, 2] },
+                            { area: 1.5, nodes: [1, 2] },
+                            { area: 1.5, nodes: [1, 3] },
+                            { area: 1.5, nodes: [2, 3] },
+                            { area: 1.5, nodes: [2, 4] },
+                            { area: 1.5, nodes: [3, 4] },
+                            { area: 1.5, nodes: [3, 5] },
+                            { area: 1.5, nodes: [3, 6] },
+                            { area: 1.5, nodes: [4, 6] },
+                            { area: 1.5, nodes: [5, 6] },
+                            { area: 1.5, nodes: [5, 7] },
+                            { area: 1.5, nodes: [6, 7] },
+                            { area: 1.5, nodes: [6, 8] },
+                            { area: 1.5, nodes: [7, 8] },
+                            { area: 1.5, nodes: [7, 9] },
+                            { area: 1.5, nodes: [7, 10] },
+                            { area: 1.5, nodes: [8, 10] },
+                            { area: 1.5, nodes: [9, 10] },
+                            { area: 1.5, nodes: [9, 11] },
+                            { area: 1.5, nodes: [10, 11] },
+                        ],
+                        materials: [
+                            { name: "Steel", elasticModulus: 10 * Math.pow(10, 6) }
+                        ]
+                    };
+                    this.simpleStructure = {
                         nodes: [
                             {
                                 position: { x: 0, y: 40 },
@@ -155,6 +199,23 @@ var Sandbox;
                             { name: "Steel", elasticModulus: 10 * Math.pow(10, 6) }
                         ]
                     };
+                    this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "  ");
+                    this.renderOptions = CP.Mechanical.Structure.getDefaultRenderOptions();
+                    $scope.$watch(function () { return _this.structureJson; }, function (value) {
+                        if (value) {
+                            var definition = JSON.parse(value);
+                            _this.loadStructure(definition);
+                            _this.structureJson = value;
+                        }
+                    });
+                }
+                Controller.prototype.loadStructure = function (structureDefinition) {
+                    var structure = CP.Mechanical.TrussStructure.load(structureDefinition);
+                    structure.solve();
+                    this.structure = structure;
+                };
+                Controller.prototype.getStructureDefinition = function () {
+                    return this.bridgeStructure;
                 };
                 Controller.$inject = ['$scope'];
                 return Controller;
@@ -173,34 +234,34 @@ var Sandbox;
             var StructureDirective = (function (_super) {
                 __extends(StructureDirective, _super);
                 function StructureDirective() {
-                    _super.call(this);
+                    _super.call(this, {
+                        structure: "=",
+                        options: "="
+                    });
                     this.templateUrl = 'ts/apps/Truss/structure.html';
-                    this.scope = {
-                        structure: "="
-                    };
-                    this.link = function (scope, element, attr) {
-                        var scale = 7;
+                    this.link = function ($scope, element, attr) {
+                        var scale = 5;
                         var border = 0.3;
                         var canvas = element.children("canvas");
                         var ctx = canvas[0].getContext("2d");
                         ctx.scale(scale, scale);
-                        ctx.translate(15, 15);
-                        function showStructure(structure) {
+                        ctx.translate(10, 10);
+                        function render() {
                             ctx.clearRect(-15, -15, ctx.canvas.width, ctx.canvas.height);
-                            if (structure)
-                                structure.render(ctx);
+                            if ($scope.structure)
+                                $scope.structure.render(ctx, $scope.options);
                         }
-                        scope.$watch('structure', function (structure) {
-                            showStructure(structure);
+                        $scope.$watch('structure', function () {
+                            render();
                         });
+                        $scope.$watch('options', function () {
+                            render();
+                        }, true);
                     };
                 }
-                StructureDirective.injection = function () {
-                    var _this = this;
-                    return [function () {
-                        return new _this();
-                    }];
-                };
+                StructureDirective.$inject = [function () {
+                    return new StructureDirective();
+                }];
                 return StructureDirective;
             })(Sandbox.Angular.Directive);
             Truss.StructureDirective = StructureDirective;
@@ -222,7 +283,7 @@ var Sandbox;
     Sandbox.MainController = MainController;
 })(Sandbox || (Sandbox = {}));
 /// <reference path="Includes.ts"/>
-angular.module('app', []).directive('environment', Sandbox.Apps.Primordial.EnvironmentDirective.injection()).directive('structure', Sandbox.Apps.Truss.StructureDirective.injection()).config(['$routeProvider', function ($routeProvider) {
+angular.module('app', []).directive('environment', Sandbox.Apps.Primordial.EnvironmentDirective.$inject).directive('structure', Sandbox.Apps.Truss.StructureDirective.$inject).config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
         controller: Sandbox.MainController,
         templateUrl: 'Partials/main.html'
