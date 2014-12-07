@@ -87,7 +87,6 @@ var Sandbox;
             var Controller = (function (_super) {
                 __extends(Controller, _super);
                 function Controller($scope) {
-                    var _this = this;
                     _super.call(this, $scope);
                     this.$scope = $scope;
                     this.bridgeStructure = {
@@ -199,21 +198,9 @@ var Sandbox;
                             { name: "Steel", elasticModulus: 10 * Math.pow(10, 6) }
                         ]
                     };
-                    this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "  ");
+                    this.structureDefinition = this.getStructureDefinition();
                     this.renderOptions = CP.Mechanical.Structure.getDefaultRenderOptions();
-                    $scope.$watch(function () { return _this.structureJson; }, function (value) {
-                        if (value) {
-                            var definition = JSON.parse(value);
-                            _this.loadStructure(definition);
-                            _this.structureJson = value;
-                        }
-                    });
                 }
-                Controller.prototype.loadStructure = function (structureDefinition) {
-                    var structure = CP.Mechanical.TrussStructure.load(structureDefinition);
-                    structure.solve();
-                    this.structure = structure;
-                };
                 Controller.prototype.getStructureDefinition = function () {
                     return this.bridgeStructure;
                 };
@@ -235,8 +222,8 @@ var Sandbox;
                 __extends(StructureDirective, _super);
                 function StructureDirective() {
                     _super.call(this, {
-                        structure: "=",
-                        options: "="
+                        options: "=",
+                        definition: "="
                     });
                     this.templateUrl = 'ts/apps/Truss/structure.html';
                     this.link = function ($scope, element, attr) {
@@ -246,11 +233,31 @@ var Sandbox;
                         var ctx = canvas[0].getContext("2d");
                         ctx.scale(scale, scale);
                         ctx.translate(10, 10);
-                        function render() {
+                        var render = function () {
                             ctx.clearRect(-15, -15, ctx.canvas.width, ctx.canvas.height);
                             if ($scope.structure)
                                 $scope.structure.render(ctx, $scope.options);
-                        }
+                        };
+                        $scope.activeTab = 'Structure';
+                        $scope.$watch('definitionJson', function (value) {
+                            if (value) {
+                                var definition = JSON.parse(value);
+                                $scope.definition = definition;
+                            }
+                        });
+                        $scope.$watch('definition', function (definition) {
+                            if (definition) {
+                                var structure = CP.Mechanical.TrussStructure.load(definition);
+                                structure.solve();
+                                $scope.structure = structure;
+                                if (!$scope.definitionJson) {
+                                    $scope.definitionJson = JSON.stringify($scope.definition, null, "  ");
+                                }
+                            }
+                            else {
+                                $scope.structure = null;
+                            }
+                        });
                         $scope.$watch('structure', function () {
                             render();
                         });

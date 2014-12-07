@@ -2,31 +2,14 @@
 
 module Sandbox.Apps.Truss {
     export class Controller extends Angular.Controller<Controller> {
-        structure: CP.Mechanical.TrussStructure;
+        structureDefinition: CP.Mechanical.StructureDefinition;
         renderOptions: CP.Mechanical.IRenderOptions;
-        structureJson: string;
 
         static $inject = ['$scope'];
         constructor(protected $scope: Angular.IScope<Controller>) {
             super($scope);
-            this.structureJson = JSON.stringify(this.getStructureDefinition(), null, "  ");
+            this.structureDefinition = this.getStructureDefinition();
             this.renderOptions = CP.Mechanical.Structure.getDefaultRenderOptions();
-
-            $scope.$watch(() => this.structureJson, (value) => {
-                if (value) {
-                    var definition = JSON.parse(value);
-                    this.loadStructure(definition);
-                    this.structureJson = value;
-                }
-            });
-
-            
-        }
-
-        public loadStructure(structureDefinition: CP.Mechanical.StructureDefinition) {
-            var structure = CP.Mechanical.TrussStructure.load(structureDefinition);
-            structure.solve();
-            this.structure = structure;
         }
 
         public getStructureDefinition(): CP.Mechanical.StructureDefinition {

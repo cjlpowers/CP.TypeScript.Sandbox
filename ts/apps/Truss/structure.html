@@ -1,44 +1,88 @@
 ﻿<div>
     <canvas style="border:1px solid black" width="1000" height="500"></canvas>
-    <div class="input-group">
-        Show Elements: <input ng-model="options.showElements" type="checkbox" />
-        Show Nodes: <input ng-model="options.showNodes" type="checkbox" />
-        Displacement: 
-        <div class="input-group">
-            <span class="input-group-addon">
-                <input ng-model="options.showDisplacement" type="checkbox">
-            </span>
-            <input ng-model="options.displacementMultiplier" type="number" class="form-control" />
+    <ul class="nav nav-tabs">
+        <li role="presentation" ng-class="{active:activeTab==='Structure'}"><a ng-click="activeTab='Structure'">Structure</a></li>
+        <li role="presentation" ng-class="{active:activeTab==='Options'}"><a ng-click="activeTab='Options'">Options</a></li>
+        <li role="presentation" ng-class="{active:activeTab==='Nodes'}"><a ng-click="activeTab='Nodes'">Nodes</a></li>
+        <li role="presentation" ng-class="{active:activeTab==='Elements'}"><a ng-click="activeTab='Elements'">Elements</a></li>
+    </ul>
+    <div ng-show="activeTab==='Structure'">
+        <textarea ng-model="definitionJson" rows="40" class="form-control" style="font-size:small; font-family:Consolas"></textarea>
+    </div>
+    <div ng-show="activeTab==='Options'">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Rendering</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <!-- Multiple Checkboxes -->
+                        <div class="control-group">
+                            <label class="control-label" for="checkboxes">Show</label>
+                            <div class="controls">
+                                <label class="checkbox" for="checkboxes-0">
+                                    <input name="checkboxes" type="checkbox" ng-model="options.showNodes" value="Nodes">
+                                    Nodes
+                                </label>
+                                <label class="checkbox" for="checkboxes-1">
+                                    <input name="checkboxes" type="checkbox" ng-model="options.showElements" value="Elements">
+                                    Elements
+                                </label>
+                                <label class="checkbox" for="checkboxes-2">
+                                    <input name="checkboxes" type="checkbox" ng-model="options.showDisplacement" value="Displacement">
+                                    Displacement
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Prepended text-->
+                        <div class="control-group">
+                            <label class="control-label" for="">Displacement</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">Multiplier</span>
+                                    <input ng-model="options.displacementMultiplier">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
-    <table class="table table-striped">
-        <tr>
-            <th>Number</th>
-            <th>Position</th>
-            <th>Force</th>
-            <th>Displacement</th>
-            <th>Reaction Force</th>
-            <th>Reaction Displacement</th>
-        </tr>
-        <tr ng-repeat="node in structure.nodes">
-            <td>{{node.number}}</td>
-            <td>{{node.position.toString()}}</td>
-            <td>{{node.force.toString()}}</td>
-            <td>{{node.displacement.toString()}}</td>
-            <td>{{node.reactionForce.toString()}}</td>
-            <td>{{node.reactionDisplacement.toString()}}</td>
-        </tr>
-    </table>
-    <table class="table table-striped">
-        <tr>
-            <th>Number</th>
-            <th>Length</th>
-            <th>Stress</th>
-        </tr>
-        <tr ng-repeat="element in structure.elements">
-            <td>{{element.number}}</td>
-            <td>{{element.length.toString()}}</td>
-            <td>{{element.stress.toString()}}</td>
-        </tr>
-    </table>
+    <div ng-show="activeTab==='Nodes'">
+        <table class="table table-striped">
+            <tr>
+                <th>Number</th>
+                <th>Position</th>
+                <th>Force</th>
+                <th>Displacement</th>
+                <th>Reaction Force</th>
+                <th>Reaction Displacement</th>
+            </tr>
+            <tr ng-repeat="node in structure.nodes">
+                <td>{{node.number}}</td>
+                <td>{{node.position.toString()}}</td>
+                <td>{{node.force.toString()}}</td>
+                <td>{{node.displacement.toString()}}</td>
+                <td>{{node.reactionForce.toString()}}</td>
+                <td>{{node.reactionDisplacement.toString()}}</td>
+            </tr>
+        </table>
+    </div>
+    <div ng-show="activeTab==='Elements'">
+        <table class="table table-striped">
+            <tr>
+                <th>Number</th>
+                <th>Length</th>
+                <th>Stress</th>
+            </tr>
+            <tr ng-repeat="element in structure.elements">
+                <td>{{element.number}}</td>
+                <td>{{element.length.toString()}}</td>
+                <td>{{element.stress.toString()}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
