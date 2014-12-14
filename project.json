@@ -26,6 +26,7 @@
         "gen": "Microsoft.Framework.CodeGeneration"
     },
     "frameworks": {
+        "aspnetcore50": {}
     },
     "exclude": [
         "wwwroot",
