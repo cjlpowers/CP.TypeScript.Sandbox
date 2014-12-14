@@ -23,13 +23,47 @@ var Sandbox;
         Angular.Directive = Directive;
     })(Angular = Sandbox.Angular || (Sandbox.Angular = {}));
 })(Sandbox || (Sandbox = {}));
-/// <reference path="../../Includes.ts" />
+/// <reference path='../../Includes.ts' />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
+var Sandbox;
+(function (Sandbox) {
+    var Apps;
+    (function (Apps) {
+        var Primordial;
+        (function (Primordial) {
+            var Controller = (function (_super) {
+                __extends(Controller, _super);
+                function Controller($scope) {
+                    _super.call(this, $scope);
+                    this.$scope = $scope;
+                    var size = new CP.Mathematics.Vector2(600, 400);
+                    CP.Genetics.PrimitiveEnvironment.MinOrganismPopulation = 100;
+                    var environment = new CP.Genetics.PrimitiveEnvironment(size);
+                    for (var i = 0; i < 100; i++)
+                        environment.spawnOrganism();
+                    this.organism = environment.organisms[0];
+                    this.environment = environment;
+                    this.environment.onExecute = function () {
+                        this.organism = environment.organisms[0];
+                    };
+                }
+                Controller.prototype.annihilate = function () {
+                    var _this = this;
+                    this.environment.organisms.map(function (o) { return o; }).forEach(function (o) { return _this.environment.removeOrganism(o); });
+                };
+                Controller.$inject = ['$scope'];
+                return Controller;
+            })(Sandbox.Angular.Controller);
+            Primordial.Controller = Controller;
+        })(Primordial = Apps.Primordial || (Apps.Primordial = {}));
+    })(Apps = Sandbox.Apps || (Sandbox.Apps = {}));
+})(Sandbox || (Sandbox = {}));
+/// <reference path="../../Includes.ts" />
 var Sandbox;
 (function (Sandbox) {
     var Apps;
@@ -304,37 +338,3 @@ angular.module('app', []).directive('environment', Sandbox.Apps.Primordial.Envir
 }]);
 /// <reference path="typings/CP.d.ts" />
 /// <reference path="Angular/Framework.ts" />
-/// <reference path='../../Includes.ts' />
-var Sandbox;
-(function (Sandbox) {
-    var Apps;
-    (function (Apps) {
-        var Primordial;
-        (function (Primordial) {
-            var Controller = (function (_super) {
-                __extends(Controller, _super);
-                function Controller($scope) {
-                    _super.call(this, $scope);
-                    this.$scope = $scope;
-                    var size = new CP.Mathematics.Vector2(600, 400);
-                    CP.Genetics.PrimitiveEnvironment.MinOrganismPopulation = 100;
-                    var environment = new CP.Genetics.PrimitiveEnvironment(size);
-                    for (var i = 0; i < 100; i++)
-                        environment.spawnOrganism();
-                    this.organism = environment.organisms[0];
-                    this.environment = environment;
-                    this.environment.onExecute = function () {
-                        this.organism = environment.organisms[0];
-                    };
-                }
-                Controller.prototype.annihilate = function () {
-                    var _this = this;
-                    this.environment.organisms.map(function (o) { return o; }).forEach(function (o) { return _this.environment.removeOrganism(o); });
-                };
-                Controller.$inject = ['$scope'];
-                return Controller;
-            })(Sandbox.Angular.Controller);
-            Primordial.Controller = Controller;
-        })(Primordial = Apps.Primordial || (Apps.Primordial = {}));
-    })(Apps = Sandbox.Apps || (Sandbox.Apps = {}));
-})(Sandbox || (Sandbox = {}));
